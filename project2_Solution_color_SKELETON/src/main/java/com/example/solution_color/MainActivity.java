@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements OnSharedPreferenc
     Bitmap bmpThresholdedColor;         //the colorized version of the black and white image
 
     //TODO manage all the permissions you need
+    private static final int PERMISSION_REQUEST_CAMERA = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +80,8 @@ public class MainActivity extends AppCompatActivity implements OnSharedPreferenc
         setContentView(R.layout.activity_main);
 
         //TODO be sure to set up the appbar in the activity
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         //dont display these
         getSupportActionBar().setDisplayShowTitleEnabled(false);
