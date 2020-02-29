@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements OnSharedPreferenc
                 if (!verifyPermissions()) {
                     return;
                 }
+
                 doTakePicture();
 
             }
@@ -162,16 +163,18 @@ public class MainActivity extends AppCompatActivity implements OnSharedPreferenc
             settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         }
 
-        shareSubject = settings.getString(getString(R.string.subject), getString(R.string.shareTitle));
-        shareText = settings.getString(getString(R.string.message), getString(R.string.sharemessage));
-        bwPercent = settings.getInt(getString(R.string.sketch), DEFAULT_BW_PERCENT);
-        saturation = settings.getInt(getString(R.string.saturation), DEFAULT_COLOR_PERCENT);
-
         SharedPreferences.Editor preferences = myPreferences.edit();
-        
+
+        shareSubject = settings.getString(getString(R.string.subject), getString(R.string.shareTitle));
         preferences.putString(getString(R.string.subject), shareSubject);
+
+        shareText = settings.getString(getString(R.string.message), getString(R.string.sharemessage));
         preferences.putString(getString(R.string.message), shareText);
+
+        bwPercent = settings.getInt(getString(R.string.sketch), DEFAULT_BW_PERCENT);
         preferences.putInt(getString(R.string.sketch), bwPercent);
+
+        saturation = settings.getInt(getString(R.string.saturation), DEFAULT_COLOR_PERCENT);
         preferences.putInt(getString(R.string.saturation), saturation);
 
         preferences.commit();
@@ -214,7 +217,20 @@ public class MainActivity extends AppCompatActivity implements OnSharedPreferenc
     //TODO where photo is stored
     private File createImageFile(final String fn) {
         //TODO fill in
-        return null;
+        //return null;
+
+        try {
+            File newPicture = new File(getExternalMediaDirs()[0], fn);
+            newPicture.createNewFile();
+            return newPicture;
+        }
+
+        catch (IOException e) {
+            Log.e(DEBUG_TAG, "IOException on file creation" + fn);
+            return null;
+        }
+
+
     }
 
     //DUMP for students
