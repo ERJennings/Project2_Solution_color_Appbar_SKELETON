@@ -467,6 +467,16 @@ public class MainActivity extends AppCompatActivity implements OnSharedPreferenc
         //TODO share the processed image with appropriate subject, text and file URI
         //TODO the subject and text should come from the preferences set in the Settings Activity
 
+        Intent newIntent = new Intent(Intent.ACTION_SEND);
+
+        newIntent.putExtra(Intent.EXTRA_SUBJECT, shareSubject);
+        newIntent.putExtra(Intent.EXTRA_TEXT, shareText);
+
+        File newPicture = new File(processedImagePath);
+        newIntent.putExtra(Intent.EXTRA_STREAM, getUriForFile(MainActivity.this, "com.example.solution_color.fileprovider", newPicture));
+        newIntent.setType("image/png");
+        startActivity(Intent.createChooser(newIntent, null));
+
     }
 
     //TODO set this up
