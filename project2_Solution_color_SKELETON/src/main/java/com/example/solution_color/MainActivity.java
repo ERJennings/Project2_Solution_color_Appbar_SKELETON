@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
+import static androidx.core.content.FileProvider.getUriForFile;
 
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -327,7 +328,26 @@ public class MainActivity extends AppCompatActivity implements OnSharedPreferenc
     public void doTakePicture() {
         //TODO verify that app has permission to use camera
 
+        if (!verifyPermissions()) {
+            return;
+        }
+
         //TODO manage launching intent to take a picture
+
+        Intent newIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        if (newIntent.resolveActivity(getPackageManager()) != null) {
+            File newPhoto = createImageFile(ORIGINAL_FILE);
+
+            if (newPhoto != null) {
+                //Get paths
+                outputFileUri = getUriForFile(this, "com.example.solution_color.fileprovider", newPhoto);
+                originalImagePath = newPhoto.getAbsolutePath();
+                //Take picture
+                newIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+                startActivityForResult(newIntent, TAKE_PICTURE);
+            }
+        }
 
     }
 
@@ -336,10 +356,19 @@ public class MainActivity extends AppCompatActivity implements OnSharedPreferenc
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        //Refer to explicit/implicit intent demo
+
         //TODO get photo
-        //TODO set the myImage equal to the camera image returned
-        //TODO tell scanner to pic up this unaltered image
-        //TODO save anything needed for later
+
+        if (requestCode == TAKE_PICTURE && resultCode == RESULT_OK) {
+            //TODO set the myImage equal to the camera image returned
+            bmpOriginal = Camera_Helpers.loadAndScaleImage(originalImagePath, screenheight, screenwidth);
+            //TODO tell scanner to pic up this unaltered image
+            myImage.setImageBitmap(bmpOriginal);
+            //TODO save anything needed for later
+            scanSavedMediaFile(originalImagePath);
+        }
 
     }
 
