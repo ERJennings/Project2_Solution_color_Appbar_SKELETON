@@ -78,6 +78,8 @@ public class MainActivity extends AppCompatActivity implements OnSharedPreferenc
     private static final String[] PERMISSION_LIST = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
     private static final int PERMISSION_REQUEST_ALL = 0;
 
+    private SharedPreferences myPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,16 +98,27 @@ public class MainActivity extends AppCompatActivity implements OnSharedPreferenc
             public void onClick(View view) {
                 //TODO manage this, mindful of permissions
 
+                if (!verifyPermissions()) {
+                    return;
+                }
+                doTakePicture();
+
             }
         });
 
         //get the default image
         myImage = (ImageView) findViewById(R.id.imageView1);
 
+        //From preference activity and change listener demo
 
         //TODO manage the preferences and the shared preference listenes
+        myPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
         // TODO and get the values already there getPrefValues(settings);
+        myPreferences.registerOnSharedPreferenceChangeListener(this);
+
         //TODO use getPrefValues(SharedPreferences settings)
+        getPrefValues(myPreferences);
 
         // Fetch screen height and width,
         DisplayMetrics metrics = this.getResources().getDisplayMetrics();
@@ -155,6 +168,10 @@ public class MainActivity extends AppCompatActivity implements OnSharedPreferenc
     private void setUpFileSystem(){
         //TODO do we have needed permissions?
         //TODO if not then dont proceed
+
+        if (!verifyPermissions()) {
+            return;
+        }
 
         //get some paths
         // Create the File where the photo should go
@@ -313,6 +330,9 @@ public class MainActivity extends AppCompatActivity implements OnSharedPreferenc
         bmpOriginal = BitMap_Helpers.copyBitmap(myImage.getDrawable());
 
         //TODO make media scanner pick up that images are gone
+
+        scanSavedMediaFile(originalImagePath);
+        scanSavedMediaFile(processedImagePath);
 
     }
 
