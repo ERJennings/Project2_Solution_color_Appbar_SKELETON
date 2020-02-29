@@ -192,6 +192,46 @@ public class MainActivity extends AppCompatActivity implements OnSharedPreferenc
     @Override
     public void onRequestPermissionsResult(int permsRequestCode, String[] permissions, int[] grantResults) {
         //TODO fill in
+
+        //See for reference: onRequestPermissionsResult in RuntimePermissionsBasic
+
+        if (permsRequestCode == PERMISSION_REQUEST_ALL) {
+            for (String permissionCheck : permissions) {
+
+                //START CAMERA PERMISSIONS
+                if (permissionCheck.equals(Manifest.permission.CAMERA)) {
+                    if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                        Snackbar.make(findViewById(android.R.id.content), R.string.cameraAccess, Snackbar.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Snackbar.make(findViewById(android.R.id.content), R.string.noCameraAccess, Snackbar.LENGTH_SHORT).show();
+                    }
+                }
+                //END CAMERA PERMISSIONS
+
+                //START READ PERMISSIONS
+                if (permissionCheck.equals(Manifest.permission.CAMERA)) {
+                    if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                        Snackbar.make(findViewById(android.R.id.content), R.string.readAccess, Snackbar.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Snackbar.make(findViewById(android.R.id.content), R.string.noReadAccess, Snackbar.LENGTH_SHORT).show();
+                    }
+                }
+                //END READ PERMISSIONS
+
+                //START WRITE PERMISSIONS
+                if (permissionCheck.equals(Manifest.permission.CAMERA)) {
+                    if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                        Snackbar.make(findViewById(android.R.id.content), R.string.writeAccess, Snackbar.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Snackbar.make(findViewById(android.R.id.content), R.string.noWriteAccess, Snackbar.LENGTH_SHORT).show();
+                    }
+                }
+                //END WRITE PERMISSIONS
+            }
+        }
     }
 
     //DUMP for students
@@ -200,7 +240,6 @@ public class MainActivity extends AppCompatActivity implements OnSharedPreferenc
      * these permissions.  Note this is coarse in that I assumme I need them all
      */
     private boolean verifyPermissions() {
-
         //TODO fill in
 
         //See for reference: requestCameraPermission and showCameraPreview in PermissionDemo
