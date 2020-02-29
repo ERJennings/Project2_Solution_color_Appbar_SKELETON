@@ -72,7 +72,11 @@ public class MainActivity extends AppCompatActivity implements OnSharedPreferenc
     Bitmap bmpThresholdedColor;         //the colorized version of the black and white image
 
     //TODO manage all the permissions you need
-    private static final int PERMISSION_REQUEST_CAMERA = 0;
+    //private static final int PERMISSION_REQUEST_CAMERA = 0;
+    //private static final int PERMISSION_REQUEST_READ = 0;
+    //private static final int PERMISSION_REQUEST_WRITE = 0;
+    private static final String[] PERMISSION_LIST = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+    private static final int PERMISSION_REQUEST_ALL = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -199,9 +203,32 @@ public class MainActivity extends AppCompatActivity implements OnSharedPreferenc
 
         //TODO fill in
 
+        //See for reference: requestCameraPermission and showCameraPreview in PermissionDemo
+
+        boolean verified = true;
+
+        for (String permissionCheck : PERMISSION_LIST) {
+
+            verified = true;
+
+            if (ActivityCompat.checkSelfPermission(this, permissionCheck) != PackageManager.PERMISSION_GRANTED) {
+
+                ActivityCompat.requestPermissions(this, PERMISSION_LIST, PERMISSION_REQUEST_ALL);
+                verified = false;
+
+            }
+
+            return verified;
+
+        }
+
         //and return false until they are granted
-        return false;
+        //return false;
+
+        //verified = true;
+        return verified;
     }
+
 
     //take a picture and store it on external storage
     public void doTakePicture() {
