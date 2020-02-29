@@ -155,6 +155,27 @@ public class MainActivity extends AppCompatActivity implements OnSharedPreferenc
     //TODO Please ensure that this function is called by your preference change listener
     private void getPrefValues(SharedPreferences settings) {
         //TODO should track shareSubject, shareText, saturation, bwPercent
+
+        //See preference activity and change listener demo
+
+        if (settings == null) {
+            settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        }
+
+        shareSubject = settings.getString(getString(R.string.subject), getString(R.string.shareTitle));
+        shareText = settings.getString(getString(R.string.message), getString(R.string.sharemessage));
+        bwPercent = settings.getInt(getString(R.string.sketch), DEFAULT_BW_PERCENT);
+        saturation = settings.getInt(getString(R.string.saturation), DEFAULT_COLOR_PERCENT);
+
+        SharedPreferences.Editor preferences = myPreferences.edit();
+        
+        preferences.putString(getString(R.string.subject), shareSubject);
+        preferences.putString(getString(R.string.message), shareText);
+        preferences.putInt(getString(R.string.sketch), bwPercent);
+        preferences.putInt(getString(R.string.saturation), saturation);
+
+        preferences.commit();
+
     }
 
     @Override

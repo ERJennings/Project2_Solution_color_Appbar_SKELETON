@@ -8,5 +8,9 @@
     <string name="noReadAccess">Read access denied</string>
     <string name="writeAccess">Write access allowed</string>
     <string name="noWriteAccess">Write access denied</string>
+    <string name="subject">Subject</string>
+    <string name="message">Text</string>
+    <string name="sketch">Sketch</string>
+    <string name="saturation">Saturation</string>
 
 </resources>
