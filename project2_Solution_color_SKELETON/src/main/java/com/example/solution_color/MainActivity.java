@@ -95,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements OnSharedPreferenc
 
         FloatingActionButton fab = findViewById(R.id.buttonTakePicture);
         fab.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
                 //TODO manage this, mindful of permissions
@@ -307,10 +308,8 @@ public class MainActivity extends AppCompatActivity implements OnSharedPreferenc
             verified = true;
 
             if (ActivityCompat.checkSelfPermission(this, permissionCheck) != PackageManager.PERMISSION_GRANTED) {
-
                 ActivityCompat.requestPermissions(this, PERMISSION_LIST, PERMISSION_REQUEST_ALL);
                 verified = false;
-
             }
 
             return verified;
