@@ -2,4 +2,35 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 <!--TODO fill these in-->
+
+    <item
+        android:id="@+id/resetButton"
+        android:title="Reset"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:id="@+id/sketchButton"
+        android:title="Sketch"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:id="@+id/colorButton"
+        android:title="Color"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:id="@+id/shareButton"
+        android:title="Share"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:id="@+id/settingsButton"
+        android:title="Settings"
+        app:showAsAction="never"
+        />
+
 </menu>

@@ -222,6 +222,7 @@ public class MainActivity extends AppCompatActivity implements OnSharedPreferenc
 
         try {
             File newPicture = new File(getExternalMediaDirs()[0], fn);
+            //getExternalMediaDirs is deprecated, but I couldn't make this work without it.
             newPicture.createNewFile();
             return newPicture;
         }
@@ -484,6 +485,29 @@ public class MainActivity extends AppCompatActivity implements OnSharedPreferenc
     public boolean onOptionsItemSelected(MenuItem item) {
         //TODO handle all of the appbar button clicks
 
+        int MenuID = item.getItemId();
+
+        if (MenuID == R.id.resetButton) {
+            doReset();
+        }
+
+        else if (MenuID == R.id.sketchButton) {
+            doSketch();
+        }
+
+        else if (MenuID == R.id.colorButton) {
+            doColorize();
+        }
+
+        else if (MenuID == R.id.shareButton) {
+            doShare();
+        }
+
+        else if (MenuID == R.id.settingsButton) {
+            Intent openSettings = new Intent(MainActivity.this, SettingsActivity.class);
+            startActivity(openSettings);
+        }
+
         return true;
     }
 
@@ -491,6 +515,7 @@ public class MainActivity extends AppCompatActivity implements OnSharedPreferenc
     @Override
     public void onSharedPreferenceChanged(SharedPreferences arg0, String arg1) {
         //TODO reload prefs at this point
+        getPrefValues(arg0);
     }
 
     /**
